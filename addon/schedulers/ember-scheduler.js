@@ -28,10 +28,12 @@ function scheduleAbsolute(state, dueTime, action) {
 }
 
 function scheduleEmberAction(disposable, queue, target, state, action, scheduler) {
-	Ember.run.schedule(queue, target, function() {
-		if(!disposable.isDisposed) {
-			disposable.setDisposable(action(scheduler, state));
-		}
+	Ember.run(function() {
+		Ember.run.schedule(queue, target, function() {
+			if(!disposable.isDisposed) {
+				disposable.setDisposable(action(scheduler, state));
+			}
+		});
 	});
 }
 
